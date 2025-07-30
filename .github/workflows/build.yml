@@ -1,12 +1,12 @@
 name: Build
 
 on:
-  pull_request:
-    types: [opened, synchronize, closed]
-    paths:
-      - '**.kicad_sch'
-      - '**.kicad_pcb'
-      - '**.kicad_pro'
+  # pull_request:
+  #   types: [opened, synchronize, closed]
+  #   paths:
+  #     - '**.kicad_sch'
+  #     - '**.kicad_pcb'
+  #     - '**.kicad_pro'
   push:
     branches:
       - main
