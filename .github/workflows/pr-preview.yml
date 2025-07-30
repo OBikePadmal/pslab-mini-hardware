@@ -10,8 +10,6 @@ jobs:
   capture-pr-number:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success'
-    outputs:
-      pr_number: $
 
     steps:
       - name: Download PR number artifact
@@ -40,24 +38,19 @@ jobs:
         shell: bash
         run: |
           unzip pr_number.zip
-          echo "pr_number=$(cat pr-number.txt)" >> $GITHUB_OUTPUT
 
-  upload-schematic:
-    runs-on: ubuntu-latest
-    needs: capture-pr-number
-
-    steps:
       - name: Comment on PR
         uses: actions/github-script@v7
-        env:
-          pr_number: $
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const prNumber = process.env.pr_number;
+            const fs = require('fs');
+            const path = require('path');
+            const temp = '${{ github.workspace }}';
+            const issue_number = Number(fs.readFileSync(path.join(temp, 'pr-number.txt')));
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: parseInt(prNumber),
+              issue_number: issue_number,
               body: 'Thank you for the PR!'
             });
