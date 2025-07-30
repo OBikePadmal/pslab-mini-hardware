@@ -38,16 +38,18 @@ jobs:
         shell: bash
         run: |
           unzip pr_number.zip
+          echo "ISSUE_NUMBER=$(cat pr_number.txt)" >> $GITHUB_ENV
 
       - name: Comment on PR
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const fs = require('fs');
-            const path = require('path');
-            const temp = '${{ github.workspace }}';
-            const issue_number = Number(fs.readFileSync(path.join(temp, 'pr-number.txt')));
+            # const fs = require('fs');
+            # const path = require('path');
+            # const temp = '${{ github.workspace }}';
+            # const issue_number = Number(fs.readFileSync(path.join(temp, 'pr-number.txt')));
+            const issue_number = Number(process.env['ISSUE_NUMBER']);
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
