@@ -65,6 +65,13 @@ jobs:
           mkdir -p schematics
           unzip schematics.zip -d schematics/
 
+      - name: Check for schematic files
+        run: |
+          if ! find ./schematics/ -name "*-diff.png" -type f | grep -q .; then
+              echo "No schematic differences found. Exiting without further action."
+              exit 0
+          fi
+
       - name: Fetch PR Number
         id: fetch-pr-number
         uses: actions/github-script@v7
