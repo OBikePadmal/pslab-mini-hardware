@@ -273,7 +273,7 @@
 			(in_bom yes)
 			(on_board yes)
 			(property "Reference" "#PWR"
-				(at 0 -3.81 0)
+				(at 0 -3.810 0)
 				(effects
 					(font
 						(size 1.27 1.27)
