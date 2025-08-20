@@ -3,8 +3,8 @@ name: Build Schematic
 on:
   pull_request:
     types: [opened, synchronize]
-    # paths:
-    #   - '**.kicad_sch'
+    paths:
+      - '**.kicad_sch'
 
 jobs:
   expose-pr-number:
